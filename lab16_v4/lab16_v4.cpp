@@ -1,30 +1,46 @@
-﻿#include <iostream>
+#include <iostream>
 #include <string>
-#include <vector>
 using namespace std;
 
-struct Book {
+class Book {
+private:
     string author;
     string title;
     string publisher;
     int year;
     int pages;
+
+public:
+    // Constructor
+    Book(string a, string t, string p, int y, int pg) {
+        author = a;
+        title = t;
+        publisher = p;
+        year = y;
+        pages = pg;
+    }
+
+    // Getters
+    string getAuthor() { return author; }
+    string getPublisher() { return publisher; }
+    int getYear() { return year; }
+
+    // Display book info
+    void display() {
+        cout << author << " — \"" << title << "\", "
+             << publisher << ", " << year << ", "
+             << pages << " pages" << endl;
+    }
 };
 
-
-void printBook(const Book& b) {
-    cout << b.author << " — \"" << b.title << "\", "
-        << b.publisher << ", " << b.year << ", "
-        << b.pages << " page." << endl;
-}
-
 int main() {
-    vector<Book> books = {
-        {"Ivanenko I.", "Basics of Programming", "Education", 2018, 320},
-        {"Petrenko O.", "Algorithms and Data Structures", "Science", 2020, 280},
-        {"Ivanenko I.", "C++ for Beginners", "Education", 2022, 410},
-        {"Sydorenko L.", "Databases", "Technology", 2019, 350},
-        {"Petrenko O.", "Object-oriented programming", "Science", 2023, 290}
+    const int SIZE = 5;
+    Book books[SIZE] = {
+        Book("Ivanenko I.", "Programming Basics", "Education", 2018, 320),
+        Book("Petrenko O.", "Algorithms and Data Structures", "Science", 2020, 280),
+        Book("Ivanenko I.", "C++ for Beginners", "Education", 2022, 410),
+        Book("Sydorenko L.", "Databases", "Tech", 2019, 350),
+        Book("Petrenko O.", "Object-Oriented Programming", "Science", 2023, 290)
     };
 
     string author, publisher;
@@ -32,21 +48,24 @@ int main() {
 
     cout << "Enter author: ";
     getline(cin, author);
-    cout << "\nAuthor's books " << author << ":\n";
-    for (auto& b : books)
-        if (b.author == author) printBook(b);
+    cout << "\nBooks by " << author << ":\n";
+    for (int i = 0; i < SIZE; i++)
+        if (books[i].getAuthor() == author)
+            books[i].display();
 
-    cout << "\nEnter the publisher: ";
+    cout << "\nEnter publisher: ";
     getline(cin, publisher);
-    cout << "\nBooks of the publishing house " << publisher << ":\n";
-    for (auto& b : books)
-        if (b.publisher == publisher) printBook(b);
+    cout << "\nBooks published by " << publisher << ":\n";
+    for (int i = 0; i < SIZE; i++)
+        if (books[i].getPublisher() == publisher)
+            books[i].display();
 
-    cout << "\nEnter the year: ";
+    cout << "\nEnter year: ";
     cin >> year;
-    cout << "\nBooks published after " << year << " year:\n";
-    for (auto& b : books)
-        if (b.year > year) printBook(b);
+    cout << "\nBooks published after " << year << ":\n";
+    for (int i = 0; i < SIZE; i++)
+        if (books[i].getYear() > year)
+            books[i].display();
 
     return 0;
 }
